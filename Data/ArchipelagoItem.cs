@@ -1,0 +1,53 @@
+using System;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Models;
+using Uktena64Randomizer.Archipelago;
+using Newtonsoft.Json;
+
+namespace Uktena64Randomizer.Data
+{
+    [Serializable]
+    public class ArchipelagoItem
+    {
+        public long ID;
+        public string Name;
+        public int SlotID;
+        public string SlotName;
+        public string Game;
+        public ItemFlags Classification;
+        public bool Collected;
+        public ArchipelagoItem(ScoutedItemInfo item, bool collected)
+        {
+            ID = item.ItemId;
+            Name = item.ItemName;
+            SlotID = item.Player;
+            SlotName = Plugin.ArchipelagoClient.GetPlayerNameFromSlot(SlotID);
+            Game = item.ItemGame;
+            Classification = item.Flags;
+            Collected = collected;
+        }
+
+        [JsonConstructor]
+        public ArchipelagoItem(int index, long id, string name, int slotID, string slotName, string game, ItemFlags classification, bool collected)
+        {
+            ID = id;
+            Name = name;
+            SlotID = slotID;
+            SlotName = slotName;
+            Game = game;
+            Classification = classification;
+            Collected = collected;
+        }
+
+        public ArchipelagoItem()
+        {
+            ID = -34;
+            Name = "NULL";
+            SlotID = -1;
+            SlotName = "NULL";
+            Game = "NULL";
+            Classification = ItemFlags.None;
+            Collected = false;
+        }
+    }
+}
